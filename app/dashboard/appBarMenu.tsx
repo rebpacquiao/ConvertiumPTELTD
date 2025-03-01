@@ -7,6 +7,7 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 export default async function AppBarMenu() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
+  console.log(data);
   if (error || !data?.user) {
     redirect("/login");
   }
@@ -21,7 +22,7 @@ export default async function AppBarMenu() {
           ></Typography>
           <Box display="flex" alignItems="center">
             <Typography variant="body1" component="p" sx={{ mr: 2 }}>
-              Hello {data.user.email}
+              Hello {data.user.user_metadata.full_name}
             </Typography>
             <LogoutButton />
           </Box>
