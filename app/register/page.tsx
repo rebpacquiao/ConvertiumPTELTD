@@ -31,6 +31,7 @@ import Link from "next/link";
 const formSchema = z
   .object({
     email: z.string().email(),
+    fullName: z.string().min(1, "Full name is required"),
   })
   .and(passwordMatchSchema);
 
@@ -43,6 +44,7 @@ export default function Register() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      fullName: "",
       password: "",
       passwordConfirm: "",
     },
@@ -54,6 +56,7 @@ export default function Register() {
     try {
       const response = await registerUser({
         email: data.email,
+        fullName: data.fullName,
         password: data.password,
         passwordConfirm: data.passwordConfirm,
       });
@@ -87,6 +90,19 @@ export default function Register() {
             >
               <FormField
                 control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Full Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="text-white" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -98,6 +114,7 @@ export default function Register() {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="password"
