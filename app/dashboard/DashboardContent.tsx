@@ -1,17 +1,9 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
+
 import { useQuery } from "@tanstack/react-query";
-import {
-  TextField,
-  Button,
-  MenuItem,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { supabase } from "@/utils/supabase/client";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";

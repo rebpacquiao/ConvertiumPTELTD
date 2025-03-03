@@ -5,10 +5,6 @@ import Link from "next/link";
 export default function PersonalInformation({ data }) {
   console.log("PersonalInformation data:", data);
 
-  if (!data || !data.user) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <div className="p-5 mb-6 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -21,28 +17,34 @@ export default function PersonalInformation({ data }) {
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
               <div>
                 <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                  Full Name
+                  First Name
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.user.user_metadata.full_name}
+                  {data.first_Name}
                 </p>
               </div>
-
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Last Name
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {data.last_name}
+                </p>
+              </div>
               <div>
                 <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
                   Email address
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.user.user_metadata.email}
+                  {data.email}
                 </p>
               </div>
-
               <div>
                 <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
                   Mobile Number
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.user.user_metadata.phone}
+                  {data.contact_number}
                 </p>
               </div>
             </div>
@@ -50,7 +52,7 @@ export default function PersonalInformation({ data }) {
 
           <Link
             className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
-            href={`/edit/${data.user.id}`}
+            href={`/edit/${data.id}`}
             shallow
           >
             <svg
