@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
+
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -14,11 +16,20 @@ import { supabase } from "@/utils/supabase/client";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import PersonalInformation from "./PersonalInformation";
+import { fetchProfile } from "../../app/api/api";
 
-export default async function DashboardContent() {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  console.log(data);
+export default function DashboardContent() {
+  const {
+    data: profile,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["profile"],
+    queryFn: fetchProfile,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading profile</div>;
 
   return (
     <main className="flex-1 overflow-x-hidden overflow-y-auto px-10 mt-10 rounded-lg bg-gray-200">
@@ -39,7 +50,7 @@ export default async function DashboardContent() {
               </div>
               <div className="order-3 xl:order-2">
                 <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                  {data.user.user_metadata.full_name}
+                  {profile?.[0]?.first_Name} {profile?.[0]?.last_name}
                 </h4>
                 <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-left">
                   <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -47,7 +58,7 @@ export default async function DashboardContent() {
                   </p>
                   <div className="hidden h-3.5 w-px bg-gray-300 dark:bg-gray-700 xl:block"></div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {data.user.user_metadata.full_name}
+                    {profile?.[0]?.first_Name} {profile?.[0]?.last_name}
                   </p>
                 </div>
               </div>
@@ -73,7 +84,7 @@ export default async function DashboardContent() {
             </Button>
           </div>
         </div>
-        <PersonalInformation data={data} />
+        <PersonalInformation data={profile?.[0]} />
       </div>
     </main>
   );
