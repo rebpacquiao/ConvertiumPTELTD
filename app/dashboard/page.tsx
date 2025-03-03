@@ -3,7 +3,7 @@ import DashboardContent from "./DashboardContent";
 import React from "react";
 import AppBarMenu from "./appBarMenu";
 
-export default async function Dashboard() {
+export default function Dashboard() {
   return (
     <>
       <div className="flex h-screen bg-gray-200">

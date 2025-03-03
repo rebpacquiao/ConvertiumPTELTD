@@ -1,7 +1,14 @@
 import React from "react";
 import { Button } from "@mui/material";
+import Link from "next/link";
 
 export default function PersonalInformation({ data }) {
+  console.log("PersonalInformation data:", data);
+
+  if (!data || !data.user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="p-5 mb-6 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -29,10 +36,23 @@ export default function PersonalInformation({ data }) {
                   {data.user.user_metadata.email}
                 </p>
               </div>
+
+              <div>
+                <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                  Mobile Number
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {data.user.user_metadata.phone}
+                </p>
+              </div>
             </div>
           </div>
 
-          <Button className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+          <Link
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+            href={`/edit/${data.user.id}`}
+            shallow
+          >
             <svg
               className="fill-current"
               width="18"
@@ -49,7 +69,7 @@ export default function PersonalInformation({ data }) {
               ></path>
             </svg>
             Edit
-          </Button>
+          </Link>
         </div>
       </div>
     </>
