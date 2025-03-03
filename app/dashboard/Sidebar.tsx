@@ -32,7 +32,7 @@ export default function Sidebar() {
       <nav className="mt-10">
         <Link
           className="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-          href="#"
+          href="/"
         >
           <span className="mx-3">Basic Details</span>
         </Link>
