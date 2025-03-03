@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "../../dashboard/Sidebar";
 import AppBarMenu from "../../dashboard/appBarMenu";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function EditInformation({ params }) {
   const { id } = params;
@@ -20,7 +21,7 @@ export default function EditInformation({ params }) {
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
-                    <div>
+                    <form>
                       <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
                         Full Name
                       </p>
@@ -29,7 +30,11 @@ export default function EditInformation({ params }) {
                         variant="outlined"
                         className="w-full"
                       />
-                    </div>
+                      <div className="flex gap-3 mt-5">
+                        <Button variant="outlined">Cancel</Button>
+                        <Button variant="contained">Submit</Button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
