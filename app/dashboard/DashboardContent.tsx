@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 import { supabase } from "@/utils/supabase/client";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import PersonalInformation from "./PersonalInformation";
-import { fetchProfile } from "../../app/api/api";
+import { fetchProfile, updateProfile } from "../../app/api/api";
 import AdditionalDetails from "./AdditionalDetails";
 import SpouseDetails from "./SpouseDetails";
 import PersonalPreferences from "./PersonalPreferences";
@@ -25,6 +32,27 @@ export default function DashboardContent() {
   });
 
   const [activeTab, setActiveTab] = useState("profile");
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState(profile?.[0] || {});
+
+  const handleClickOpen = () => {
+    setFormData(profile?.[0] || {});
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    await updateProfile(formData);
+    setOpen(false);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading profile</div>;
@@ -64,7 +92,10 @@ export default function DashboardContent() {
                 </div>
               </div>
 
-              <Button className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+              <Button
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+                onClick={handleClickOpen}
+              >
                 <svg
                   className="fill-current"
                   width="18"
@@ -98,6 +129,117 @@ export default function DashboardContent() {
           )}
         </div>
       </main>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Edit Profile</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Home Address"
+            type="text"
+            fullWidth
+            name="home_address"
+            value={formData.home_address || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            label="Country"
+            type="text"
+            fullWidth
+            name="country"
+            value={formData.country || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            label="Postal Code"
+            type="text"
+            fullWidth
+            name="postal_code"
+            value={formData.postal_code || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            label="Date of Birth"
+            type="date"
+            fullWidth
+            name="date_of_birth"
+            value={formData.date_of_birth || ""}
+            onChange={handleChange}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            margin="dense"
+            label="Gender"
+            select
+            fullWidth
+            name="gender"
+            value={formData.gender || ""}
+            onChange={handleChange}
+          >
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+          </TextField>
+          <TextField
+            margin="dense"
+            label="Status"
+            select
+            fullWidth
+            name="status"
+            value={formData.status || ""}
+            onChange={handleChange}
+          >
+            <MenuItem value="Married">Married</MenuItem>
+            <MenuItem value="Single">Single</MenuItem>
+          </TextField>
+          <TextField
+            margin="dense"
+            label="Salutation"
+            select
+            fullWidth
+            name="salutation"
+            value={formData.salutation || ""}
+            onChange={handleChange}
+          >
+            <MenuItem value="Mr.">Mr.</MenuItem>
+            <MenuItem value="Ms.">Ms.</MenuItem>
+            <MenuItem value="Mrs.">Mrs.</MenuItem>
+          </TextField>
+          <TextField
+            margin="dense"
+            label="First Name of Spouse"
+            type="text"
+            fullWidth
+            name="spouse_first_name"
+            value={formData.spouse_first_name || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            label="Last Name of Spouse"
+            type="text"
+            fullWidth
+            name="spouse_last_name"
+            value={formData.spouse_last_name || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            label="Personal Reference"
+            type="text"
+            fullWidth
+            name="personal_reference"
+            value={formData.personal_reference || ""}
+            onChange={handleChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSubmit}>Save</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
