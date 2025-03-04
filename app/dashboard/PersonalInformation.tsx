@@ -2,7 +2,18 @@ import React from "react";
 import { Button } from "@mui/material";
 import Link from "next/link";
 
-export default function PersonalInformation({ data }) {
+interface PersonalInformationProps {
+  data: {
+    first_Name: string;
+    last_name: string;
+    email: string;
+    contact_number: string;
+  };
+}
+
+export default function PersonalInformation({
+  data,
+}: PersonalInformationProps) {
   console.log("PersonalInformation data:", data);
 
   return (

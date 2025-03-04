@@ -2,7 +2,15 @@ import React from "react";
 import { Button } from "@mui/material";
 import Link from "next/link";
 
-export default function PersonalPreferences({ data }) {
+interface PersonalPreferencesProps {
+  data: {
+    personal_references: string;
+  };
+}
+
+export default function PersonalPreferences({
+  data,
+}: PersonalPreferencesProps) {
   return (
     <>
       <div className="p-5 mb-6 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
