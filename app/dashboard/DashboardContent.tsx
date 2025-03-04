@@ -10,6 +10,7 @@ import { createClient } from "@/utils/supabase/server";
 import PersonalInformation from "./PersonalInformation";
 import { fetchProfile } from "../../app/api/api";
 import AdditionalDetails from "./AdditionalDetails";
+import SpouseDetails from "./SpouseDetails";
 
 export default function DashboardContent() {
   const {
@@ -79,6 +80,7 @@ export default function DashboardContent() {
         </div>
         <PersonalInformation data={profile?.[0]} />
         <AdditionalDetails data={profile?.[0]} />
+        <SpouseDetails data={profile?.[0]} />
       </div>
     </main>
   );
