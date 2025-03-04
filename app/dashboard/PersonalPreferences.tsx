@@ -3,13 +3,13 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 
 interface PersonalPreferencesProps {
-  data: {
-    personal_references: string;
+  data?: {
+    personal_references?: string;
   };
 }
 
 export default function PersonalPreferences({
-  data,
+  data = {},
 }: PersonalPreferencesProps) {
   return (
     <>
@@ -26,7 +26,8 @@ export default function PersonalPreferences({
                   Hobbies and Interest
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.personal_references}
+                  {data.personal_references ||
+                    "No personal references available"}
                 </p>
               </div>
             </div>

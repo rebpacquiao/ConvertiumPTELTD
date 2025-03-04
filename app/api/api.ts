@@ -43,7 +43,7 @@ export const fetchProfile = async () => {
 
 export const updateProfile = async (profile: Profile) => {
   try {
-    const { data, error } = await supabase
+    const { data: profileData, error: profileError } = await supabase
       .from("profile")
       .update({
         first_name: profile.first_name,
@@ -64,41 +64,25 @@ export const updateProfile = async (profile: Profile) => {
       .eq("id", profile.id)
       .select();
 
-    if (error) {
-      console.error("Error fetching API keys:", error);
-      return [];
-    }
-    return data;
-  } catch (err) {
-    console.error("Unexpected error:", err);
-    return [];
-  }
-};
-
-export const fetchProfilPic = async (id: string) => {
-  try {
-    let { data: profile, error } = await supabase
-      .from("profile")
-      .select("profile_pic");
-  } catch (err) {
-    console.error("Unexpected error:", err);
-    return [];
-  }
-};
-
-export const updateProfilePic = async (id: string, profile_pic: string) => {
-  try {
-    const { data, error } = await supabase
-      .from("profile")
-      .update({ profile_pic: profile_pic })
-      .eq("id", id)
-      .single();
-
-    if (error) {
-      console.error("Error updating profile picture:", error);
+    if (profileError) {
+      console.error("Error updating profile:", profileError);
       return null;
     }
-    return data;
+
+    // Now, update the auth.users table to link the user with the profile
+    const { data: userData, error: userError } = await supabase
+      .from("auth.users")
+      .update({
+        profile_id: profile.id, // Assuming you have a `profile_id` in the auth.users table
+      })
+      .eq("id", profile.user_id); // Linking it with the user
+
+    if (userError) {
+      console.error("Error updating user table:", userError);
+      return null;
+    }
+
+    return { profile: profileData, user: userData };
   } catch (err) {
     console.error("Unexpected error:", err);
     return null;

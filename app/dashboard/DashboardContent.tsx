@@ -127,6 +127,24 @@ export default function DashboardContent() {
         <DialogContent>
           <TextField
             margin="dense"
+            label="First Name"
+            type="text"
+            fullWidth
+            name="first_name"
+            value={formData.first_name || ""}
+            onChange={initChange}
+          />
+          <TextField
+            margin="dense"
+            label="Last Name"
+            type="text"
+            fullWidth
+            name="last_name"
+            value={formData.last_name || ""}
+            onChange={initChange}
+          />
+          <TextField
+            margin="dense"
             label="Home Address"
             type="text"
             fullWidth

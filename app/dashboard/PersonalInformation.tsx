@@ -3,16 +3,16 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 
 interface PersonalInformationProps {
-  data: {
-    first_Name: string;
-    last_name: string;
-    email: string;
-    contact_number: string;
+  data?: {
+    first_Name?: string;
+    last_name?: string;
+    email?: string;
+    contact_number?: string;
   };
 }
 
 export default function PersonalInformation({
-  data,
+  data = {},
 }: PersonalInformationProps) {
   console.log("PersonalInformation data:", data);
 
@@ -31,7 +31,7 @@ export default function PersonalInformation({
                   First Name
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.first_Name}
+                  {data.first_Name || "No first name available"}
                 </p>
               </div>
               <div>
@@ -39,7 +39,7 @@ export default function PersonalInformation({
                   Last Name
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.last_name}
+                  {data.last_name || "No last name available"}
                 </p>
               </div>
               <div>
@@ -47,7 +47,7 @@ export default function PersonalInformation({
                   Email address
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.email}
+                  {data.email || "No email available"}
                 </p>
               </div>
               <div>
@@ -55,7 +55,7 @@ export default function PersonalInformation({
                   Mobile Number
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.contact_number}
+                  {data.contact_number || "No contact number available"}
                 </p>
               </div>
             </div>

@@ -3,18 +3,18 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 
 interface PersonalInformationProps {
-  data: {
-    home_address: string;
-    country: string;
-    postal_code: string;
-    date_of_birth: string;
-    gender: string;
-    status: string;
+  data?: {
+    home_address?: string;
+    country?: string;
+    postal_code?: string;
+    date_of_birth?: string;
+    gender?: string;
+    status?: string;
   };
 }
 
 export default function PersonalInformation({
-  data,
+  data = {},
 }: PersonalInformationProps) {
   console.log("PersonalInformation data:", data);
 
@@ -24,7 +24,7 @@ export default function PersonalInformation({
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <h4 className="text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-6">
-              Additon Information
+              Additional Information
             </h4>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
@@ -33,7 +33,7 @@ export default function PersonalInformation({
                   Home Address
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.home_address}
+                  {data.home_address || "No home address available"}
                 </p>
               </div>
               <div>
@@ -41,15 +41,15 @@ export default function PersonalInformation({
                   Country
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.country}
+                  {data.country || "No country available"}
                 </p>
               </div>
               <div>
                 <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                  Postal
+                  Postal Code
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.postal_code}
+                  {data.postal_code || "No postal code available"}
                 </p>
               </div>
               <div>
@@ -57,7 +57,7 @@ export default function PersonalInformation({
                   Date of Birth
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.date_of_birth}
+                  {data.date_of_birth || "No date of birth available"}
                 </p>
               </div>
               <div>
@@ -65,7 +65,7 @@ export default function PersonalInformation({
                   Gender
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.gender}
+                  {data.gender || "No gender available"}
                 </p>
               </div>
               <div>
@@ -73,7 +73,7 @@ export default function PersonalInformation({
                   Marital Status
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.status}
+                  {data.status || "No marital status available"}
                 </p>
               </div>
             </div>
