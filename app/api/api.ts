@@ -74,3 +74,33 @@ export const updateProfile = async (profile: Profile) => {
     return [];
   }
 };
+
+export const fetchProfilPic = async (id: string) => {
+  try {
+    let { data: profile, error } = await supabase
+      .from("profile")
+      .select("profile_pic");
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return [];
+  }
+};
+
+export const updateProfilePic = async (id: string, profile_pic: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("profile")
+      .update({ profile_pic: profile_pic })
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      console.error("Error updating profile picture:", error);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return null;
+  }
+};
