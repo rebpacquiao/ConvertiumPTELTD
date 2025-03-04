@@ -67,7 +67,7 @@ export default function DashboardContent() {
 
   return (
     <div className="flex">
-      <Sidebar setActiveTab={setActiveTab} />
+      <Sidebar setActiveTab={setActiveTab} profile={profile?.[0]} />
       <main className="flex-1 overflow-x-hidden overflow-y-auto px-10 mt-10 rounded-lg bg-gray-200">
         <div className="border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
           <h3 className="mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
@@ -112,9 +112,10 @@ export default function DashboardContent() {
           {activeTab === "additional-details" && (
             <AdditionalDetails data={profile?.[0]} />
           )}
-          {activeTab === "spouse-details" && (
-            <SpouseDetails data={profile?.[0]} />
-          )}
+          {activeTab === "spouse-details" &&
+            profile?.[0]?.status === "Married" && (
+              <SpouseDetails data={profile?.[0]} />
+            )}
           {activeTab === "personal-preferences" && (
             <PersonalPreferences data={profile?.[0]} />
           )}
