@@ -78,7 +78,7 @@ export default function DashboardContent() {
               <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
                 <div className="order-3 xl:order-2">
                   <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                    {profile?.[0]?.first_Name} {profile?.[0]?.last_name}
+                    {profile?.[0]?.first_name} {profile?.[0]?.last_name}
                   </h4>
                 </div>
               </div>
@@ -134,6 +134,7 @@ export default function DashboardContent() {
             value={formData.first_name || ""}
             onChange={initChange}
           />
+
           <TextField
             margin="dense"
             label="Last Name"
@@ -150,6 +151,15 @@ export default function DashboardContent() {
             fullWidth
             name="home_address"
             value={formData.home_address || ""}
+            onChange={initChange}
+          />
+          <TextField
+            margin="dense"
+            label="Contact Number"
+            type="text"
+            fullWidth
+            name="contact_number"
+            value={formData.contact_number || ""}
             onChange={initChange}
           />
           <TextField
