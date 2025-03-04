@@ -9,6 +9,7 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import PersonalInformation from "./PersonalInformation";
 import { fetchProfile } from "../../app/api/api";
+import AdditionalDetails from "./AdditionalDetails";
 
 export default function DashboardContent() {
   const {
@@ -77,6 +78,7 @@ export default function DashboardContent() {
           </div>
         </div>
         <PersonalInformation data={profile?.[0]} />
+        <AdditionalDetails data={profile?.[0]} />
       </div>
     </main>
   );

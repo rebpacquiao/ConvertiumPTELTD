@@ -2,6 +2,11 @@ import React from "react";
 import Link from "next/link";
 
 export default function Sidebar() {
+  const navItems = [
+    { href: "/", label: "Basic Details" },
+    { href: "/additional-details", label: "additional-details" },
+  ];
+
   return (
     <div className="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
       <div className="flex items-center justify-center mt-8">
@@ -30,12 +35,15 @@ export default function Sidebar() {
       </div>
 
       <nav className="mt-10">
-        <Link
-          className="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-          href="/"
-        >
-          <span className="mx-3">Basic Details</span>
-        </Link>
+        {navItems.map((item, index) => (
+          <Link
+            key={index}
+            className="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
+            href={item.href}
+          >
+            <span className="mx-3">{item.label}</span>
+          </Link>
+        ))}
       </nav>
     </div>
   );
