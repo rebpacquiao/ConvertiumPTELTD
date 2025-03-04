@@ -15,7 +15,7 @@ interface Profile {
   postal_code: string;
   spouse_first_name: string;
   spouse_last_name: string;
-  personal_reference: string;
+  personal_references: string;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -59,7 +59,7 @@ export const updateProfile = async (profile: Profile) => {
         postal_code: profile.postal_code,
         spouse_first_name: profile.spouse_first_name,
         spouse_last_name: profile.spouse_last_name,
-        personal_reference: profile.personal_reference,
+        personal_references: profile.personal_references,
       })
       .eq("id", profile.id)
       .select();

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   Dialog,
@@ -20,8 +20,10 @@ import AdditionalDetails from "./AdditionalDetails";
 import SpouseDetails from "./SpouseDetails";
 import PersonalPreferences from "./PersonalPreferences";
 import Sidebar from "./Sidebar";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function DashboardContent() {
+  const queryClient = useQueryClient();
   const {
     data: profile,
     error,
@@ -40,21 +42,27 @@ export default function DashboardContent() {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const initClose = () => {
     setOpen(false);
   };
 
-  const handleChange = (e) => {
+  const initChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     await updateProfile(formData);
+    queryClient.invalidateQueries({ queryKey: ["profile"] });
     setOpen(false);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-screen justify-center items-center">
+        <CircularProgress />
+      </div>
+    );
   if (error) return <div>Error loading profile</div>;
 
   return (
@@ -130,7 +138,7 @@ export default function DashboardContent() {
         </div>
       </main>
 
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={initClose}>
         <DialogTitle>Edit Profile</DialogTitle>
         <DialogContent>
           <TextField
@@ -140,7 +148,7 @@ export default function DashboardContent() {
             fullWidth
             name="home_address"
             value={formData.home_address || ""}
-            onChange={handleChange}
+            onChange={initChange}
           />
           <TextField
             margin="dense"
@@ -149,7 +157,7 @@ export default function DashboardContent() {
             fullWidth
             name="country"
             value={formData.country || ""}
-            onChange={handleChange}
+            onChange={initChange}
           />
           <TextField
             margin="dense"
@@ -158,7 +166,7 @@ export default function DashboardContent() {
             fullWidth
             name="postal_code"
             value={formData.postal_code || ""}
-            onChange={handleChange}
+            onChange={initChange}
           />
           <TextField
             margin="dense"
@@ -167,7 +175,7 @@ export default function DashboardContent() {
             fullWidth
             name="date_of_birth"
             value={formData.date_of_birth || ""}
-            onChange={handleChange}
+            onChange={initChange}
             InputLabelProps={{ shrink: true }}
           />
           <TextField
@@ -177,7 +185,7 @@ export default function DashboardContent() {
             fullWidth
             name="gender"
             value={formData.gender || ""}
-            onChange={handleChange}
+            onChange={initChange}
           >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
@@ -189,7 +197,7 @@ export default function DashboardContent() {
             fullWidth
             name="status"
             value={formData.status || ""}
-            onChange={handleChange}
+            onChange={initChange}
           >
             <MenuItem value="Married">Married</MenuItem>
             <MenuItem value="Single">Single</MenuItem>
@@ -201,7 +209,7 @@ export default function DashboardContent() {
             fullWidth
             name="salutation"
             value={formData.salutation || ""}
-            onChange={handleChange}
+            onChange={initChange}
           >
             <MenuItem value="Mr.">Mr.</MenuItem>
             <MenuItem value="Ms.">Ms.</MenuItem>
@@ -214,7 +222,7 @@ export default function DashboardContent() {
             fullWidth
             name="spouse_first_name"
             value={formData.spouse_first_name || ""}
-            onChange={handleChange}
+            onChange={initChange}
           />
           <TextField
             margin="dense"
@@ -223,21 +231,21 @@ export default function DashboardContent() {
             fullWidth
             name="spouse_last_name"
             value={formData.spouse_last_name || ""}
-            onChange={handleChange}
+            onChange={initChange}
           />
           <TextField
             margin="dense"
             label="Personal Reference"
             type="text"
             fullWidth
-            name="personal_reference"
-            value={formData.personal_reference || ""}
-            onChange={handleChange}
+            name="personal_references"
+            value={formData.personal_references || ""}
+            onChange={initChange}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Save</Button>
+          <Button onClick={initClose}>Cancel</Button>
+          <Button onClick={onSubmit}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>
