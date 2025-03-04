@@ -11,6 +11,7 @@ import PersonalInformation from "./PersonalInformation";
 import { fetchProfile } from "../../app/api/api";
 import AdditionalDetails from "./AdditionalDetails";
 import SpouseDetails from "./SpouseDetails";
+import PersonalPreferences from "./PersonalPreferences";
 
 export default function DashboardContent() {
   const {
@@ -81,6 +82,7 @@ export default function DashboardContent() {
         <PersonalInformation data={profile?.[0]} />
         <AdditionalDetails data={profile?.[0]} />
         <SpouseDetails data={profile?.[0]} />
+        <PersonalPreferences data={profile?.[0]} />
       </div>
     </main>
   );
