@@ -4,7 +4,7 @@ import Link from "next/link";
 
 interface PersonalInformationProps {
   data?: {
-    first_Name?: string;
+    first_name?: string;
     last_name?: string;
     email?: string;
     contact_number?: string;
@@ -31,7 +31,7 @@ export default function PersonalInformation({
                   First Name
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  {data.first_Name || "No first name available"}
+                  {data.first_name || "No first name available"}
                 </p>
               </div>
               <div>

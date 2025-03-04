@@ -31,24 +31,27 @@ import Link from "next/link";
 const formSchema = z
   .object({
     email: z.string().email(),
-    fullName: z.string().min(1, "Full name is required"),
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
   })
   .and(passwordMatchSchema);
 
 export default function Register() {
   const [serverError, setServerError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      fullName: "",
+      firstName: "",
+      lastName: "",
       password: "",
       passwordConfirm: "",
     },
   });
+
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setServerError(null);
     setIsLoading(true);
@@ -56,7 +59,8 @@ export default function Register() {
     try {
       const response = await registerUser({
         email: data.email,
-        fullName: data.fullName,
+        firstName: data.firstName,
+        lastName: data.lastName,
         password: data.password,
         passwordConfirm: data.passwordConfirm,
       });
@@ -64,7 +68,6 @@ export default function Register() {
       if (response.error) {
         setServerError(response.message);
       } else {
-        // Redirect to the confirmation page
         router.push("/register/confirmation");
       }
     } catch (error) {
@@ -75,7 +78,7 @@ export default function Register() {
   };
 
   return (
-    <main className="flex  bg-custom-gradient justify-center items-center min-h-screen">
+    <main className="flex bg-custom-gradient justify-center items-center min-h-screen">
       <Card className="w-[380px]">
         <CardHeader>
           <CardTitle className="text-white text-2xl">
@@ -90,10 +93,23 @@ export default function Register() {
             >
               <FormField
                 control={form.control}
-                name="fullName"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Full Name</FormLabel>
+                    <FormLabel className="text-white">First Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="text-white" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Last Name</FormLabel>
                     <FormControl>
                       <Input {...field} className="text-white" />
                     </FormControl>
@@ -114,7 +130,6 @@ export default function Register() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="password"
@@ -154,7 +169,6 @@ export default function Register() {
               {serverError && (
                 <p className="text-red-500 text-sm mt-2">{serverError}</p>
               )}
-              {/* <Button type="submit">Register</Button> */}
               <Button
                 className="bg-blue-500 hover:bg-blue-500"
                 type="submit"
