@@ -2,8 +2,20 @@
 
 import React from "react";
 
-export default function Sidebar({ setActiveTab, profile }) {
-  const navItems = [
+interface SidebarProps {
+  setActiveTab: (tab: string) => void;
+  profile?: {
+    status?: string;
+  };
+}
+
+interface NavItem {
+  label: string;
+  tab: string;
+}
+
+export default function Sidebar({ setActiveTab, profile }: SidebarProps) {
+  const navItems: NavItem[] = [
     { label: "Profile", tab: "profile" },
     { label: "Additional Details", tab: "additional-details" },
     profile?.status === "Married" && {
@@ -11,7 +23,7 @@ export default function Sidebar({ setActiveTab, profile }) {
       tab: "spouse-details",
     },
     { label: "Personal Preferences", tab: "personal-preferences" },
-  ].filter(Boolean);
+  ].filter(Boolean) as NavItem[];
 
   return (
     <div className="h-screen text-white">

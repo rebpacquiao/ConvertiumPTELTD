@@ -37,7 +37,7 @@ export default function DashboardContent() {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(profile?.[0] || {});
 
-  const handleClickOpen = () => {
+  const OpenModal = () => {
     setFormData(profile?.[0] || {});
     setOpen(true);
   };
@@ -46,7 +46,11 @@ export default function DashboardContent() {
     setOpen(false);
   };
 
-  const initChange = (e) => {
+  const initChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -85,7 +89,7 @@ export default function DashboardContent() {
 
               <Button
                 className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
-                onClick={handleClickOpen}
+                onClick={OpenModal}
               >
                 <svg
                   className="fill-current"
